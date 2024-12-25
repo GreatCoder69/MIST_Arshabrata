@@ -1,0 +1,198 @@
+# Web Exploitation
+## 1. Inspect HTML
+### Problem
+![s01054112252024](https://a.okmd.dev/md/676b0d0fa8e33.png)
+### Solution
+We follow the URL: http://saturn.picoctf.net:52846/ and it takes us to this website.
+![s01071312252024](https://a.okmd.dev/md/676b0d6b37ed9.png)
+We inspect element and on checking the HTML we find the flag hidden in the comments.
+![s01092012252024](https://a.okmd.dev/md/676b0dec4929e.png)
+### Flag for the Challenge
+```
+picoCTF{1n5p3t0r_0f_h7ml_1fd8425b}
+```
+
+## 2. IntroToBurp
+### Problem
+![s01113912252024](https://a.okmd.dev/md/676b0e7522fd2.png)
+### Solution
+We open Burp Suite Community Edition and then start a new project.  
+We navigate to the proxy tab and we get the option to open in browser.  
+Firstly we turn the intercept on and then we enter the URL http://titan.picoctf.net:65367/ in browser.  
+We enter dummy data and then click register and then we click on the forward button to implement our request.
+![s01164612252024](https://a.okmd.dev/md/676b0fa8dc029.png)
+This opens up a new tab which asks for OTP. We enter dummy data yet again and then click on submit.  
+![s01180812252024](https://a.okmd.dev/md/676b0ffb908f2.png)
+On clicking submit we can see the format of the request. What we need is to make the request not use the entered OTP as a required field to access the flag. To do this, we can simply remove the OTP parameter from the header and click on forward to carry out the request with the modified header.
+![s01201912252024](https://a.okmd.dev/md/676b107e52e4e.png)
+This gives us the flag.  
+![s01212512252024](https://a.okmd.dev/md/676b10bf73c9f.png)
+### Flag for the Challenge
+```
+picoCTF{#0TP_Bypvss_SuCc3$S_e1eb16ed}
+```
+
+## 3. dont-use-client-side
+### Problem
+![s01240212252024](https://a.okmd.dev/md/676b115be9eca.png)
+### Solution
+We follow the URL: http://jupiter.challenges.picoctf.org:29835 and see this website.
+![s01260812252024](https://a.okmd.dev/md/676b11db5eb5d.png)
+We inspect element and we find a JS function which verifies the password.
+![s02261612252024](https://a.okmd.dev/md/676b1ff312b7c.png)
+The function validates a password by dividing it into eight parts of length 4 characters and each part must be arranged according to the given order. The required sequence is 'pico' (0–4), 'CTF{' (4–8), 'no_c' (8–12), 'lien' (12–16), 'ts_p' (16–20), 'lz_7' (20–24), '723c' (24–28), and 'e}' (28–32). If we combine all these substrings we get the flag.
+![s01273812252024](https://a.okmd.dev/md/676b1234d7223.png)
+### Flag for the Challenge
+```
+picoCTF{no_clients_plz_7723ce}
+```
+
+## 4. where are the robots
+### Problem
+![s01351712252024](https://a.okmd.dev/md/676b140074e7b.png)
+### Solution
+We follow the URL: http://jupiter.challenges.picoctf.org:36474 and it takes us to this website.
+![s01362712252024](https://a.okmd.dev/md/676b14457db9e.png)
+We know that we can find the robots.txt file in the website root which specifies rules about which parts of the website can or cannot be accessed by automated agents.
+![s01395412252024](https://a.okmd.dev/md/676b1513be0d1.png)
+We could see that the developer doesn't want any user agent to access the /477ce.html in the root of the website presumably to prevent us from accessing the flag and when we visit this we find our flag.
+![s01412512252024](https://a.okmd.dev/md/676b156e94626.png)
+### Flag for the Challenge
+```
+picoCTF{ca1cu1at1ng_Mach1n3s_477ce}
+```
+
+## 5. SQL Direct
+### Problem
+![s02070812262024](https://a.okmd.dev/md/676c6cf6b423a.png)
+### Solution
+We download postgreSQL by following the steps in https://www.postgresql.org/download/linux/ubuntu/.
+```
+apt install postgresql
+```
+We follow the further given steps.
+![s02324512262024](https://a.okmd.dev/md/676c72f849d0a.png)
+We connect to the postgreSQL server and use the password postgre.
+```
+psql -h saturn.picoctf.net -p 51359 -U postgres pico
+```
+We want to see the tables in the dataframe by following the given hint.
+```
+\d
+```
+We see that there is a table named flags and when we see the contents in flag we find our flag. We use `SELECT` to specify columns and * signifies that we want to see all the columns in the table `flags`.
+![s02124912262024](https://a.okmd.dev/md/676c6e4b9c404.png)
+### Flag for the Challenge
+```
+picoCTF{L3arN_S0m3_5qL_t0d4Y_31fd14c0}
+```
+
+## 6. Some Assembly Required 1
+### Problem
+![s01432712252024](https://a.okmd.dev/md/676b15e932d29.png)
+### Solution
+We follow the URL: http://mercury.picoctf.net:40226/index.html and it takes us to this website.
+![s01440112252024](https://a.okmd.dev/md/676b160ac9635.png)
+From the name of the challenge we can infer that our flag is related to web assembly. So we go to Inspect Element and navigate to the Sources tab and then go to Pages, and here we can see the wasm file. On opening it we can find the flag.
+![s01484612252024](https://a.okmd.dev/md/676b17293253f.png)
+### Flag for the Challenge
+```
+picoCTF{cb688c00b5a2ede7eaedcae883735759}
+```
+
+## 7. Some Assembly Required 2
+### Problem
+![s01544712252024](https://a.okmd.dev/md/676b18910b19c.png)
+### Solution
+We follow the URL: http://mercury.picoctf.net:44570/index.html and it takes us to this website.
+![s01583212252024](https://a.okmd.dev/md/676b19723fd10.png)
+From the name of the challenge we can infer that our flag is related to web assembly. So we go to Inspect Element and navigate to the Sources tab and then go to Pages, and here we can see the wasm file. Here we can find the encrypted flag which we must decrypt.
+![s02003312252024](https://a.okmd.dev/md/676b19ec43ac0.png)
+Now to find how the file is encrypted, we must see which JS function is being exported. We see that copy_char is exported and on further checking the file we can see that i32 XOR encryption is carried out and we must decrypt.
+![s02025312252024](https://a.okmd.dev/md/676b1a7744091.png)
+We go to https://www.dcode.fr/en in order to brute force and find our flag using the XOR cipher option.
+![s02043812252024](https://a.okmd.dev/md/676b1ae16d0fb.png)
+We go through all the answers which the website brute forced to find one which starts with picoCTF. We see that when we XOR the plaintext characters with 8, we get a string starting with pico which turns out to be our flag.
+![s02083112252024](https://a.okmd.dev/md/676b1bcabe810.png)
+### Flag for the Challenge
+```
+picoCTF{64e2a9691192fcbd4aa9b8f5ee8134a2}
+```
+
+## 8. Some Assembly Required 3
+### Problem
+![s02152712262024](https://a.okmd.dev/md/676c6ee8f2bb7.png)
+### Solution
+We follow the URL: http://mercury.picoctf.net:47240/index.html and it takes us to this website.
+![s02174112262024](https://a.okmd.dev/md/676c6f6ee0f26.png)
+We go to inspect element and then to sources tab followed by pages tab. Here we go through the wasm file and find two strings and it is safe to assume the longer one is the encrypted flag and the shorter one is the key. We also save the wasm file in our local machine.
+![s02192312262024](https://a.okmd.dev/md/676c6fd6582d0.png)
+We download the Web Assembly Toolkit (wabt) to decompile our wasm file.
+```
+sudo install wabt
+```
+Then we decompile our file to get a more human-readable high level interpretation of the wasm file.
+```
+wasm-decompile fda79aae
+```
+We go through the contents and we see that the function copy is involved in the encryption of our flag.
+![s02232312262024](https://a.okmd.dev/md/676c70c5a08b5.png)
+Now we know that we have a custom XOR encryption where each byte of the plaintext is XORed with a corresponding byte of a 5-byte key applied in reverse cyclic order (4 - i % 5). XOR encryption is symmetric, meaning the same process decrypts the ciphertext by XORing it with the key again. We can use the following python code for this.
+```
+string = "\x9dn\x93\xc8\xb2\xb9A\x8b\x94\xc6\xdf3\xc0\xc5\x95\xde7\xc3\x9f\x93\xdf?\xc9\xc3\xc2\x8c2\x93\x90\xc1\x8ee\x95\x9f\xc2\x8c6\xc8\x95\xc0\x90"
+
+key = "\xf1\xa7\xf0\x07\xed"
+
+for i in range(len(string)):
+    print(chr(ord(string[i]) ^ ord(key[4 - i % 5])), end="")
+```
+This gives us the flag.
+![s02245712262024](https://a.okmd.dev/md/676c7123dffd1.png)
+### Flag for the Challenge
+```
+picoCTF{37240bd3038b289d3a5c70cbe83a1821}
+```
+
+## 9. Who are you?
+### Problem
+![s02305812252024](https://a.okmd.dev/md/676b210bd5b98.png)
+### Solution
+We open Burp Suite Community Edition and then start a new project.  
+We navigate to the proxy tab and we get the option to open in browser.   
+Firstly we turn the intercept on and then we enter the URL http://titan.picoctf.net:65367/ in browser. 
+![s02362412252024](https://a.okmd.dev/md/676b22562f7c8.png)
+We get to know our User Agent is PicoBrowser, so we modify the header request to set user agent as PicoBrowser and forward to implement the request with modified header.
+![s02380012252024](https://a.okmd.dev/md/676b22b5d2b09.png)
+We must change the Referer to the URL without the https so that the site thinks we are not visinting from another site and forward to implement the request with modified header.
+![s02401112252024](https://a.okmd.dev/md/676b23380ebd3.png)
+We must change the year on which we are accessing the site to 2018 and forward to implement the request with modified header.
+![s02414312252024](https://a.okmd.dev/md/676b2394958ca.png)
+We must set the dnt (do not track) value to 1(true) and forward to implement the request with modified header.
+![s02451412252024](https://a.okmd.dev/md/676b24670ca00.png)
+We must set our IP address to one in sweden so we look for Swedish IP addresses. We can do this by modifying the "X-Forwarded-For" tag to a swedish IP address from below and forward to implement the request with modified header.
+![s02444012252024](https://a.okmd.dev/md/676b244238394.png)
+![s02474812252024](https://a.okmd.dev/md/676b2501c6566.png)
+We must change the language to Swedish by changing "Accept-Language" tag to sv which is shortform for swedish and forward to implement the request with modified header.  
+This gives us the flag.
+![s02493412252024](https://a.okmd.dev/md/676b2567ce158.png)
+### Flag for the Challenge
+```
+picoCTF{http_h34d3rs_v3ry_c0Ol_much_w0w_79e451a7}
+```
+
+## 10. Power Cookie
+### Problem
+![s02110712252024](https://a.okmd.dev/md/676b1c6563a89.png)
+### Solution
+We follow the URL: http://saturn.picoctf.net:60323/ and it takes us to this website.
+![s02121812252024](https://a.okmd.dev/md/676b1cab69a1c.png)
+We click on continue as guest and get this message.
+![s02141612252024](https://a.okmd.dev/md/676b1d2296a9b.png)
+From the challenge name we know we have to work with cookies. So we go to inspect element, applications tab and then navigate to the Cookies section. Here we can see that there is a cookie named isAdmin set to false(0).
+![s02155412252024](https://a.okmd.dev/md/676b1d83f13fa.png)
+We want to assume admin privileges so we change the value of the cookie to 1 and reload and that gives us the flag.
+![s02171412252024](https://a.okmd.dev/md/676b1dd3ed7d7.png)
+### Flag for the Challenge
+```
+picoCTF{gr4d3_A_c00k13_5d2505be}
+```
